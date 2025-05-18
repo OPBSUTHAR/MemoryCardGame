@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Two-Player Memory Card Game</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0;
+      padding: 10px;
+      min-height: 100vh;
+      color: #333;
+      background: linear-gradient(135deg, #74ebd5, #acb6e5, #f472b6, #60a5fa);
+      background-size: 400% 400%;
+      animation: gradientFlow 15s ease infinite;
+      overflow-x: hidden;
+    }
+
+    @keyframes gradientFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .background-particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .particle {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+      animation: float 20s infinite linear;
+    }
+
+    .particle:nth-child(1) { width: 20px; height: 20px; top: 10%; left: 15%; animation-duration: 25s; }
+    .particle:nth-child(2) { width: 15px; height: 15px; top: 30%; left: 25%; animation-duration: 18s; }
+    .particle:nth-child(3) { width: 25px; height: 25px; top: 50%; left: 40%; animation-duration: 22s; }
+    .particle:nth-child(4) { width: 10px; height: 10px; top: 70%; left: 60%; animation-duration: 15s; }
+    .particle:nth-child(5) { width: 18px; height: 18px; top: 20%; left: 80%; animation-duration: 20s; }
+
+    @keyframes float {
+      0% { transform: translate(0, 0); opacity: 0.3; }
+      50% { opacity: 0.6; }
+      100% { transform: translate(100vw, 100vh); opacity: 0.3; }
+    }
+
+    .game-container {
+      text-align: center;
+      width: 100%;
+      max-width: 900px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(200, 200, 255, 0.6) 50%, rgba(150, 150, 255, 0.4) 100%);
+      background-size: 200% 200%;
+      animation: pulseGlow 8s ease-in-out infinite;
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      position: relative;
+      z-index: 1;
+    }
+
+    @keyframes pulseGlow {
+      0% { background-size: 200% 200%; }
+      50% { background-size: 250% 250%; }
+      100% { background-size: 200% 200%; }
+    }
+
+    .controls {
+      margin-bottom: 15px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .controls button, .controls select {
+      padding: 10px 20px;
+      font-size: 1em;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(45deg, #ff6b6b, #ff8e53);
+      color: white;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .controls button:hover, .controls select:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .stats {
+      margin-bottom: 15px;
+      font-size: 1.1em;
+      background: linear-gradient(45deg, #84fab0, #8fd3f4);
+      padding: 10px;
+      border-radius: 8px;
+      color: #333;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+      gap: 10px;
+      justify-content: center;
+      align-items: center;
+      max-width: 100%;
+    }
+
+    .card {
+      aspect-ratio: 1 / 1;
+      width: 100%;
+      max-width: 90px;
+      background: linear-gradient(135deg, #6b7280, #4b5563);
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+      perspective: 1000px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    }
+
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.6s;
+    }
+
+    .card-front, .card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2em;
+    }
+
+    .card-front {
+      background: linear-gradient(135deg, #6b7280, #4b5563);
+      border: 2px solid #9ca3af;
+    }
+
+    .card-back {
+      background: linear-gradient(135deg, #fefcbf, #f3e8ff);
+      transform: rotateY(180deg);
+      border: 2px solid #d1d5db;
+    }
+
+    .card.flipped .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .card.matched {
+      animation: disappear 0.5s forwards;
+    }
+
+    @keyframes disappear {
+      to {
+        opacity: 0;
+        transform: scale(0);
+        visibility: hidden;
+      }
+    }
+
+    .congratulations {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: linear-gradient(45deg, #34d399, #10b981);
+      color: white;
+      padding: 20px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+    }
+
+    .congratulations.show {
+      display: block;
+    }
+
+    .congratulations button {
+      background: linear-gradient(45deg, #ff6b6b, #ff8e53);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .congratulations button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    @media (max-width: 400px) {
+      .card {
+        max-width: 60px;
+        font-size: 1.2em;
+      }
+      .card-back {
+        font-size: 1.2em;
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="background-particles">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
+  <div class="game-container">
+    <h1>Two-Player Memory Card Game</h1>
+    <div class="controls">
+      <button onclick="startNewGame()">New Game</button>
+      <select id="difficulty" onchange="changeDifficulty()">
+        <option value="4">Easy (4x4)</option>
+        <option value="6">Medium (6x6)</option>
+        <option value="8">Hard (8x8)</option>
+        <option value="10">Expert (10x10)</option>
+      </select>
+    </div>
+    <div class="stats">
+      Player 1 Score: <span id="player1-score">0</span> |
+      Player 2 Score: <span id="player2-score">0</span> |
+      Current Turn: <span id="current-player">Player 1</span> |
+      Moves: <span id="moves">0</span> |
+      Time: <span id="timer">0</span>s
+    </div>
+    <div class="grid" id="grid"></div>
+    <div class="congratulations" id="congratulations">
+      <h2>Game Over!</h2>
+      <p><span id="winner"></span></p>
+      <p>Player 1 Score: <span id="final-player1-score"></span></p>
+      <p>Player 2 Score: <span id="final-player2-score"></span></p>
+      <p>Total Moves: <span id="final-moves"></span> | Time: <span id="final-time"></span>s</p>
+      <button onclick="startNewGame()">Play Again</button>
+    </div>
+  </div>
+  <script>
+    let cards = [];
+    let flippedCards = [];
+    let matchedCards = [];
+    let moves = 0;
+    let time = 0;
+    let timerInterval;
+    let gridSize = 4;
+    let currentPlayer = 1;
+    let player1Score = 0;
+    let player2Score = 0;
+    const emojis = ['😺', '🐶', '🐸', '🐵', '🦁', '🐘', '🐼', '🐻', '🦒', '🐮', '🐷', '🐰', '🦊', '🐯', '🐴', '🦄', '🐍', '🐢', '🦋', '🐞', '🐝', '🐜', '🦀', '🐠', '🐙'];
+
+    function createBoard() {
+      const grid = document.getElementById('grid');
+      grid.innerHTML = '';
+      grid.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
+      cards = [];
+      const totalCards = gridSize * gridSize;
+      const pairsNeeded = totalCards / 2;
+      const selectedEmojis = emojis.slice(0, pairsNeeded);
+      const cardValues = [...selectedEmojis, ...selectedEmojis];
+      cardValues.sort(() => Math.random() - 0.5);
+
+      for (let i = 0; i < totalCards; i++) {
+        const card = document.createElement('div');
+        card.classList.add('card');
+        card.innerHTML = `
+          <div class="card-inner">
+            <div class="card-front"></div>
+            <div class="card-back">${cardValues[i]}</div>
+          </div>
+        `;
+        card.addEventListener('click', () => flipCard(card, cardValues[i]));
+        grid.appendChild(card);
+        cards.push(card);
+      }
+    }
+
+    function flipCard(card, value) {
+      if (flippedCards.length < 2 && !flippedCards.includes(card) && !matchedCards.includes(card)) {
+        card.classList.add('flipped');
+        flippedCards.push({ card, value });
+        if (flippedCards.length === 2) {
+          moves++;
+          updateStats();
+          checkMatch();
+        }
+      }
+    }
+
+    function checkMatch() {
+      const [card1, card2] = flippedCards;
+      if (card1.value === card2.value) {
+        card1.card.classList.add('matched');
+        card2.card.classList.add('matched');
+        matchedCards.push(card1.card, card2.card);
+        if (currentPlayer === 1) {
+          player1Score++;
+        } else {
+          player2Score++;
+        }
+        updateStats();
+        flippedCards = [];
+        if (matchedCards.length === cards.length) {
+          endGame();
+        }
+      } else {
+        setTimeout(() => {
+          card1.card.classList.remove('flipped');
+          card2.card.classList.remove('flipped');
+          flippedCards = [];
+          switchPlayer();
+        }, 1000);
+      }
+    }
+
+    function switchPlayer() {
+      currentPlayer = currentPlayer === 1 ? 2 : 1;
+      updateStats();
+    }
+
+    function updateStats() {
+      document.getElementById('player1-score').textContent = player1Score;
+      document.getElementById('player2-score').textContent = player2Score;
+      document.getElementById('current-player').textContent = `Imaginary Player ${currentPlayer}`;
+      document.getElementById('moves').textContent = moves;
+      document.getElementById('timer').textContent = time;
+    }
+
+    function startTimer() {
+      clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        time++;
+        updateStats();
+      }, 1000);
+    }
+
+    function endGame() {
+      clearInterval(timerInterval);
+      const congrats = document.getElementById('congratulations');
+      document.getElementById('final-player1-score').textContent = player1Score;
+      document.getElementById('final-player2-score').textContent = player2Score;
+      document.getElementById('final-moves').textContent = moves;
+      document.getElementById('final-time').textContent = time;
+      let winnerText = player1Score > player2Score ? 'Imaginary Player 1 Wins!' : player2Score > player1Score ? 'Imaginary Player 2 Wins!' : 'It\'s a Tie!';
+      document.getElementById('winner').textContent = winnerText;
+      congrats.classList.add('show');
+    }
+
+    function startNewGame() {
+      moves = 0;
+      time = 0;
+      player1Score = 0;
+      player2Score = 0;
+      currentPlayer = 1;
+      matchedCards = [];
+      flippedCards = [];
+      updateStats();
+      createBoard();
+      startTimer();
+      document.getElementById('congratulations').classList.remove('show');
+    }
+
+    function changeDifficulty() {
+      gridSize = parseInt(document.getElementById('difficulty').value);
+      startNewGame();
+    }
+
+    // Initialize game
+    createBoard();
+    startTimer();
+  </script>
+</body>
+</html>
