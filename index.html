@@ -3,23 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Memory Master</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
+  <title>Quantum Memory Master</title>
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
     :root {
-      --primary: #00f0ff;
-      --secondary: #7122fa;
-      --accent: #ff00e6;
-      --dark: #0a0e23;
-      --light: #e0f8ff;
-      --card-bg: linear-gradient(145deg, #0a0e23, #1a1f4a);
-      --card-gradient-1: linear-gradient(135deg, #ff00e6, #7122fa);
-      --card-gradient-2: linear-gradient(135deg, #00f0ff, #0084ff);
-      --card-gradient-3: linear-gradient(135deg, #ffcc00, #ff6600);
-      --card-gradient-4: linear-gradient(135deg, #00ff88, #00b4ff);
-      --glow: 0 0 15px currentColor;
-      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      --primary: #00d4ff;
+      --secondary: #ff007a;
+      --accent: #00ff9d;
+      --dark: #0c0f2b;
+      --light: #e6faff;
+      --card-bg: linear-gradient(145deg, #12153d, #1e2559);
+      --glow: 0 0 12px rgba(0, 212, 255, 0.7);
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     * {
@@ -29,122 +25,73 @@
     }
 
     body {
-      font-family: 'Kanit', sans-serif;
-      background-color: var(--dark);
+      font-family: 'Exo 2', sans-serif;
+      background: var(--dark);
       color: var(--light);
-      min-height: 100vh;
+      min Миниатюрный виджет для X (ранее Twitter) min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 10px;
-      overflow: hidden;
-      position: relative;
+      padding: 15px;
+      overflow: auto; /* Enable scrolling for the body */
     }
 
-    /* Space Background Animation */
-    .space-bg {
+    /* Quantum Background */
+    .quantum-bg {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      z-index: -2;
+      z-index: -1;
+      background: radial-gradient(circle at center, rgba(0, 212, 255, 0.1) 0%, transparent 70%);
       overflow: hidden;
     }
 
-    .star {
+    .particle {
       position: absolute;
-      background-color: white;
+      width: 4px;
+      height: 4px;
+      background: var(--primary);
       border-radius: 50%;
-      animation: twinkle var(--duration, 5s) infinite ease-in-out;
-      opacity: var(--opacity, 0.8);
+      animation: quantum-drift calc(var(--duration, 8s) * 1s) linear infinite;
+      opacity: 0.6;
     }
 
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.2; }
-      50% { opacity: 1; }
-    }
-
-    .planet {
-      position: absolute;
-      border-radius: 50%;
-      filter: drop-shadow(0 0 10px currentColor);
-      animation: float var(--duration, 120s) linear infinite;
-    }
-
-    @keyframes float {
-      0% { transform: translate(var(--start-x, -20%), var(--start-y, -20%)) scale(0.8); }
-      100% { transform: translate(var(--end-x, 120%), var(--end-y, 120%)) scale(1.2); }
-    }
-
-    .spaceship {
-      position: absolute;
-      font-size: 1.5rem;
-      animation: fly var(--duration, 40s) linear infinite;
-      transform: rotate(var(--rotation, 0deg));
-    }
-
-    @keyframes fly {
-      0% { transform: translate(-100px, var(--start-y, 20vh)) rotate(var(--rotation, 0deg)); }
-      100% { transform: translate(calc(100vw + 100px), var(--end-y, 80vh)) rotate(var(--rotation, 0deg)); }
-    }
-
-    .math-symbol {
-      position: absolute;
-      font-size: 1.2rem;
-      opacity: 0.7;
-      animation: float-math var(--duration, 60s) linear infinite;
-    }
-
-    @keyframes float-math {
-      0% { transform: translate(var(--start-x, -10%), var(--start-y, -10%)) rotate(0deg); }
-      100% { transform: translate(var(--end-x, 110%), var(--end-y, 110%)) rotate(360deg); }
+    @keyframes quantum-drift {
+      0% { transform: translate(var(--start-x, 0%), var(--start-y, 0%)) scale(0.5); opacity: 0.3; }
+      50% { opacity: 0.8; }
+      100% { transform: translate(var(--end-x, 100%), var(--end-y, 100%)) scale(1.2); opacity: 0.3; }
     }
 
     /* Game Container */
     .game-container {
       width: 100%;
-      max-width: 1200px;
-      background: rgba(10, 14, 35, 0.7);
-      backdrop-filter: blur(8px);
-      border-radius: 16px;
+      max-width: 900px; /* Reduced max-width to fit better on screen */
+      background: rgba(18, 21, 61, 0.8);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
       padding: 20px;
-      box-shadow: 0 0 30px rgba(0, 240, 255, 0.3);
-      border: 1px solid rgba(0, 240, 255, 0.2);
+      box-shadow: var(--glow);
+      border: 1px solid rgba(0, 212, 255, 0.3);
       position: relative;
-      overflow: hidden;
       z-index: 1;
-    }
-
-    .game-container::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(0, 240, 255, 0.1) 0%, transparent 70%);
-      animation: pulse 8s infinite alternate;
-      z-index: -1;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(0.8); opacity: 0.3; }
-      100% { transform: scale(1.2); opacity: 0.6; }
+      transform: scale(0.7); /* Simulate 70% zoom effect */
+      transform-origin: top center;
+      margin: 0 auto;
     }
 
     h1 {
-      font-family: 'Orbitron', sans-serif;
+      font-family: 'Exo 2', sans-serif;
       text-align: center;
-      margin-bottom: 20px;
-      font-size: 2.8rem;
-      background: linear-gradient(to right, var(--primary), var(--accent));
+      font-size: 2.5rem; /* Reduced font size */
+      background: linear-gradient(to right, var(--primary), var(--secondary));
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
-      letter-spacing: 2px;
+      text-shadow: var(--glow);
+      margin-bottom: 15px;
     }
 
     /* Controls */
@@ -160,40 +107,36 @@
       padding: 10px 18px;
       border: none;
       border-radius: 8px;
-      font-family: 'Orbitron', sans-serif;
-      font-weight: 500;
+      font-family: 'Exo 2', sans-serif;
+      font-weight: 600;
       cursor: pointer;
       transition: var(--transition);
-      letter-spacing: 1px;
+      font-size: 0.9rem; /* Reduced font size */
     }
 
     button {
-      background: var(--card-gradient-1);
-      color: white;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: var(--light);
       display: flex;
       align-items: center;
       gap: 8px;
-      box-shadow: 0 4px 10px rgba(113, 34, 250, 0.4);
+      box-shadow: var(--glow);
     }
 
     button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 15px rgba(113, 34, 250, 0.6);
-    }
-
-    button:active {
-      transform: translateY(0);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(0, 212, 255, 0.5);
     }
 
     select {
-      background: rgba(10, 14, 35, 0.8);
+      background: rgba(18, 21, 61, 0.9);
       color: var(--light);
       border: 1px solid var(--primary);
-      min-width: 150px;
-      appearance: none;
-      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2300f0ff'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+      padding-right: 25px;
+      border-radius: 8px;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2300d4ff'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
       background-repeat: no-repeat;
-      background-position: right 10px center;
+      background-position: right 8px center;
       background-size: 15px;
     }
 
@@ -201,48 +144,68 @@
     .stats {
       display: flex;
       flex-wrap: wrap;
+      gap: 8px;
       justify-content: center;
-      gap: 10px;
-      margin-bottom: 15px;
-      background: rgba(0, 240, 255, 0.1);
+      background: rgba(0, 212, 255, 0.1);
       padding: 12px;
       border-radius: 10px;
-      border: 1px solid rgba(0, 240, 255, 0.2);
+      margin-bottom: 15px;
     }
 
     .stat-item {
       display: flex;
       align-items: center;
       gap: 8px;
-      font-size: 0.95rem;
-      background: rgba(10, 14, 35, 0.8);
+      font-size: 0.9rem; /* Reduced font size */
+      background: rgba(18, 21, 61, 0.9);
       padding: 8px 12px;
       border-radius: 8px;
-      min-width: 120px;
-      justify-content: center;
-      border: 1px solid rgba(0, 240, 255, 0.1);
+      border: 1px solid rgba(0, 212, 255, 0.2);
     }
 
-    .stat-item i {
-      font-size: 1.1rem;
+    .progress-bar {
+      width: 100%;
+      height: 6px;
+      background: rgba(0, 212, 255, 0.2);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+
+    .progress {
+      height: 100%;
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+      width: 0;
+      transition: width 0.5s ease;
     }
 
     .player1 { color: var(--primary); }
-    .player2 { color: var(--accent); }
-    .current { 
-      color: white; 
-      background: rgba(0, 240, 255, 0.2);
-      box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
-    }
-    .moves { color: #a7c4f2; }
-    .time { color: #f8f9fa; }
+    .player2 { color: var(--secondary); }
+    .current { background: rgba(0, 212, 255, 0.3); }
+    .streak { color: var(--accent); }
 
     /* Grid */
     .grid-container {
       width: 100%;
-      overflow: auto;
-      padding: 5px;
+      max-height: 400px; /* Limit height to ensure scrolling */
+      overflow-y: auto; /* Enable vertical scrolling */
+      padding: 8px;
       margin-bottom: 15px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--primary) rgba(0, 212, 255, 0.1);
+    }
+
+    .grid-container::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .grid-container::-webkit-scrollbar-track {
+      background: rgba(0, 212, 255, 0.1);
+    }
+
+    .grid-container::-webkit-scrollbar-thumb {
+      background: var(--primary);
+      border-radius: 4px;
     }
 
     .grid {
@@ -250,27 +213,25 @@
       gap: 6px;
       margin: 0 auto;
       justify-content: center;
+      max-width: 100%;
     }
 
     /* Cards */
     .card {
       aspect-ratio: 1;
       width: 100%;
-      min-width: 40px;
-      max-width: 70px;
+      max-width: 60px; /* Reduced card size */
       perspective: 1000px;
       cursor: pointer;
       position: relative;
       transform-style: preserve-3d;
-      transition: transform 0.5s;
     }
 
     .card-inner {
-      position: relative;
       width: 100%;
       height: 100%;
       transform-style: preserve-3d;
-      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     }
 
     .card.flipped .card-inner {
@@ -286,88 +247,56 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+      box-shadow: var(--glow);
     }
 
     .card-front {
       background: var(--card-bg);
-      transform: rotateY(0deg);
-      border: 1px solid rgba(0, 240, 255, 0.3);
-      box-shadow: inset 0 0 15px rgba(0, 240, 255, 0.2);
+      border: 1px solid rgba(0, 212, 255, 0.4);
     }
 
     .card-back {
-      background: white;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
       transform: rotateY(180deg);
-      font-size: 1.5rem;
-      border: 1px solid rgba(255, 255, 255, 0.3);
+      font-size: 1.5rem; /* Reduced font size */
+      color: var(--light);
     }
 
-    /* Card gradient patterns */
-    .card:nth-child(8n+1) .card-front { background: var(--card-gradient-1); }
-    .card:nth-child(8n+2) .card-front { background: var(--card-gradient-2); }
-    .card:nth-child(8n+3) .card-front { background: var(--card-gradient-3); }
-    .card:nth-child(8n+4) .card-front { background: var(--card-gradient-4); }
-    .card:nth-child(8n+5) .card-front { background: var(--card-gradient-1); }
-    .card:nth-child(8n+6) .card-front { background: var(--card-gradient-2); }
-    .card:nth-child(8n+7) .card-front { background: var(--card-gradient-3); }
-    .card:nth-child(8n+8) .card-front { background: var(--card-gradient-4); }
-
-    /* Animations */
     .card.matched {
-      animation: matchedAnimation 0.6s forwards;
-      pointer-events: none;
+      animation: quantum-match 0.6s forwards;
     }
 
-    @keyframes matchedAnimation {
+    @keyframes quantum-match {
       0% { transform: scale(1); }
-      50% { 
-        transform: scale(1.1);
-        filter: drop-shadow(0 0 10px var(--primary));
-      }
-      100% { 
-        transform: scale(1);
-        filter: drop-shadow(0 0 15px var(--primary));
-      }
+      50% { transform: scale(1.15); filter: drop-shadow(var(--glow)); }
+      100% { transform: scale(1); filter: drop-shadow(var(--glow)); }
     }
 
     .card.shake {
-      animation: shake 0.5s;
+      animation: quantum-shake 0.4s;
     }
 
-    @keyframes shake {
+    @keyframes quantum-shake {
       0%, 100% { transform: translateX(0); }
-      20%, 60% { transform: translateX(-3px); }
-      40%, 80% { transform: translateX(3px); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
     }
 
-    .pulse {
-      animation: pulse 1.5s infinite;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.05); opacity: 0.8; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-
-    /* Modal Windows */
+    /* Modal */
     .modal {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.8);
+      background: rgba(0, 0, 0, 0.85);
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
       z-index: 1000;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.5s ease;
-      backdrop-filter: blur(5px);
+      transition: opacity 0.4s ease;
     }
 
     .modal.show {
@@ -376,76 +305,32 @@
     }
 
     .modal-content {
-      background: linear-gradient(145deg, #0a0e23, #1a1f4a);
-      padding: 30px;
-      border-radius: 16px;
+      background: var(--card-bg);
+      padding: 25px;
+      border-radius: 14px;
       text-align: center;
       max-width: 90%;
-      width: 500px;
-      box-shadow: 0 0 30px rgba(0, 240, 255, 0.3);
-      border: 1px solid rgba(0, 240, 255, 0.3);
-      transform: scale(0.9);
-      transition: transform 0.3s ease;
-      position: relative;
-      overflow: hidden;
+      width: 450px;
+      box-shadow: var(--glow);
+      transform: scale(0.8);
+      transition: transform 0.4s ease;
     }
 
     .modal.show .modal-content {
       transform: scale(1);
     }
 
-    .modal-content::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(
-        to bottom right,
-        transparent 0%,
-        transparent 45%,
-        rgba(0, 240, 255, 0.1) 50%,
-        transparent 55%,
-        transparent 100%
-      );
-      animation: shine 3s infinite;
-    }
-
-    @keyframes shine {
-      0% { transform: translate(-50%, -50%) rotate(0deg); }
-      100% { transform: translate(-50%, -50%) rotate(360deg); }
-    }
-
     .modal h2 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 2rem;
-      margin-bottom: 20px;
+      font-size: 2rem; /* Reduced font size */
       color: var(--primary);
-      text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+      text-shadow: var(--glow);
+      margin-bottom: 15px;
     }
 
     .modal p {
-      font-size: 1.1rem;
-      margin-bottom: 10px;
-      color: rgba(224, 248, 255, 0.9);
-    }
-
-    .winner {
-      font-size: 1.8rem;
-      font-weight: bold;
-      margin: 20px 0;
-      color: var(--primary);
-      text-shadow: 0 0 15px rgba(0, 240, 255, 0.7);
-      font-family: 'Orbitron', sans-serif;
-    }
-
-    /* Confetti */
-    .confetti {
-      position: absolute;
-      width: 12px;
-      height: 12px;
-      opacity: 0;
+      font-size: 1rem; /* Reduced font size */
+      color: var(--light);
+      margin-bottom: 8px;
     }
 
     /* Loading Screen */
@@ -455,12 +340,12 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.9);
+      background: var(--dark);
       z-index: 9999;
       display: flex;
-      justify-content: center;
-      align-items: center;
       flex-direction: column;
+      align-items: center;
+      justify-content: center;
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.5s ease;
@@ -474,640 +359,585 @@
     .loader {
       width: 60px;
       height: 60px;
-      border: 5px solid rgba(0, 240, 255, 0.2);
-      border-radius: 50%;
+      border: 5px solid rgba(0, 212, 255, 0.3);
       border-top-color: var(--primary);
-      animation: spin 1s ease-in-out infinite;
+      border-radius: 50%;
+      animation: quantum-spin 0.8s ease-in-out infinite;
     }
 
-    @keyframes spin {
+    @keyframes quantum-spin {
       to { transform: rotate(360deg); }
     }
 
     .loading-text {
+      margin-top: 15px;
+      font-size: 1.2rem; /* Reduced font size */
       color: var(--light);
-      margin-top: 20px;
-      font-size: 1.2rem;
-      font-family: 'Orbitron', sans-serif;
-      text-shadow: 0 0 10px var(--primary);
+      text-shadow: var(--glow);
     }
 
     /* Responsive Adjustments */
     @media (max-width: 768px) {
+      .game-container {
+        transform: scale(0.65); /* Slightly smaller scale for medium screens */
+        padding: 15px;
+      }
+
       h1 {
         font-size: 2rem;
       }
-      
-      .stat-item {
-        font-size: 0.85rem;
-        padding: 6px 10px;
-        min-width: 100px;
-      }
-      
+
       .card {
-        max-width: 60px;
+        max-width: 55px;
       }
-      
+
       .card-back {
         font-size: 1.3rem;
       }
-      
+
       .modal-content {
         padding: 20px;
+        width: 400px;
       }
-      
+
       .modal h2 {
-        font-size: 1.5rem;
-      }
-      
-      .modal p {
-        font-size: 1rem;
+        font-size: 1.8rem;
       }
     }
 
     @media (max-width: 480px) {
       .game-container {
-        padding: 15px;
+        transform: scale(0.6); /* Further reduce scale for small screens */
+        padding: 10px;
       }
-      
+
       h1 {
         font-size: 1.8rem;
       }
-      
+
       .controls {
         flex-direction: column;
         align-items: center;
       }
-      
+
       button, select {
         width: 100%;
         max-width: 200px;
+        font-size: 0.85rem;
       }
-      
+
       .stat-item {
         font-size: 0.8rem;
-        min-width: auto;
-        flex-grow: 1;
       }
-      
+
       .card {
         max-width: 50px;
-        min-width: 30px;
       }
-      
+
       .card-back {
-        font-size: 1.1rem;
+        font-size: 1.2rem;
       }
-      
+
       .modal-content {
         padding: 15px;
+        width: 90%;
       }
-      
+
       .modal h2 {
-        font-size: 1.3rem;
+        font-size: 1.5rem;
       }
-      
+
       .modal p {
         font-size: 0.9rem;
       }
     }
+
+    footer {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 0.8rem; /* Reduced font size */
+      color: var(--light);
+      opacity: 0.8;
+      transition: opacity 0.3s ease;
+      padding: 10px;
+      background: rgba(18, 21, 61, 0.9);
+      border-radius: 8px;
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      box-shadow: var(--glow);
+      width: 100%;
+      max-width: 400px; /* Limit footer width */
+      position: relative;
+    }
+
+    footer a {
+      color: var(--light);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      opacity: 0.8;
+    }
+
+    footer:hover {
+      opacity: 1;
+      cursor: pointer;
+    }
+
+    @keyframes quantum-drift {
+      0% { transform: translate(var(--start-x, 0%), var(--start-y, 0%)) scale(0.5); opacity: 0.3; }
+      50% { opacity: 0.8; }
+      100% { transform: translate(var(--end-x, 100%), var(--end-y, 100%)) scale(1.2); opacity: 0.3; }
+    }
+
+    .note {
+      position: left-0;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(18, 21, 61, 0.9);
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: var(--glow);
+      width: calc(100% - 30px);
+      max-width: 600px;
+      font-size: 0.9rem; /* Reduced font size */
+      top: 30px;
+
+    }
+
+    .greeting {
+      text-align: left;
+      margin-bottom: 20px;
+      font-size: 1.1rem; /* Reduced font size */
+      margin-bottom: 20px;
+      color: var(--light);
+      background: rgba(18, 21, 61, 0.8);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: var(--glow);
+      border: 1px solid rgba(0, 212, 255, 0.3);
+      position: left-0;
+      left: 50%;
+      spacing : 10px;
+      transform: translateX(-50%);
+      z-index: 1;
+    }
+
+    .greet {
+      color: var(--primary);
+      font-weight: bold;
+      text-shadow: var(--glow);
+    }
+
+    .greet-foot {
+      color: var(--secondary);
+      font-weight: bold;
+      text-shadow: var(--glow); 
+    }
+
   </style>
 </head>
 <body>
-  <!-- Space Background Elements -->
-  <div class="space-bg" id="space-bg"></div>
-  
-  <!-- Loading Screen -->
+  <div class="quantum-bg" id="quantum-bg"></div>
   <div class="loading" id="loading">
     <div class="loader"></div>
-    <div class="loading-text">Initializing Memory Matrix...</div>
+    <div class="loading-text">Activating Quantum Matrix...</div>
   </div>
 
-  <!-- Main Game Container -->
+  <div class="greeting">
+    Welcome to <strong class="greet">Quantum Memory Master</strong>!<br>
+    Have fun playing this memory card game!<br>
+    <br>
+    Hello Players!<br>
+  </div>
+
   <div class="game-container">
-    <h1>MEMORY MASTER</h1>
-    
+    <h1>QUANTUM MEMORY MASTER</h1>
     <div class="controls">
-      <button onclick="startNewGame()">
-        <i class="fas fa-play"></i> New Game
-      </button>
-      <select id="difficulty" onchange="changeDifficulty()">
+      <button id="new-game"><i class="fas fa-play"></i> New Game</button>
+      <select id="difficulty">
         <option value="4">Easy (4×4)</option>
         <option value="6">Medium (6×6)</option>
         <option value="8">Hard (8×8)</option>
         <option value="10">Expert (10×10)</option>
       </select>
-      <button onclick="showHowToPlay()">
-        <i class="fas fa-question-circle"></i> How to Play
-      </button>
+      <button id="how-to-play-btn"><i class="fas fa-question-circle"></i> How to Play</button>
     </div>
-    
     <div class="stats">
-      <div class="stat-item player1">
-        <i class="fas fa-user-astronaut"></i>
-        <span id="player1-score">0</span>
-      </div>
-      <div class="stat-item player2">
-        <i class="fas fa-user-astronaut"></i>
-        <span id="player2-score">0</span>
-      </div>
-      <div class="stat-item current">
-        <i class="fas fa-sync-alt"></i>
-        <span id="current-player">Player 1</span>
-      </div>
-      <div class="stat-item moves">
-        <i class="fas fa-route"></i>
-        <span id="moves">0</span>
-      </div>
-      <div class="stat-item time">
-        <i class="fas fa-clock"></i>
-        <span id="timer">0</span>s
-      </div>
+      <div class="stat-item player1"><i class="fas fa-user-astronaut"></i> P1: <span id="player1-score">0</span></div>
+      <div class="stat-item player2"><i class="fas fa-user-astronaut"></i> P2: <span id="player2-score">0</span></div>
+      <div class="stat-item current"><i class="fas fa-sync-alt"></i> <span id="current-player">Player 1</span></div>
+      <div class="stat-item streak"><i class="fas fa-fire"></i> Streak: <span id="streak">0</span></div>
+      <div class="stat-item time"><i class="fas fa-clock"></i> <span id="timer">0</span>s</div>
+      <div class="progress-bar"><div class="progress" id="progress"></div></div>
     </div>
-    
     <div class="grid-container">
       <div class="grid" id="grid"></div>
     </div>
   </div>
-  
-  <!-- Game Over Modal -->
   <div class="modal" id="congratulations">
     <div class="modal-content">
-      <h2>MISSION COMPLETE!</h2>
+      <h2>QUANTUM VICTORY!</h2>
       <div class="winner" id="winner"></div>
       <p><i class="fas fa-user-astronaut player1"></i> Player 1: <span id="final-player1-score">0</span></p>
       <p><i class="fas fa-user-astronaut player2"></i> Player 2: <span id="final-player2-score">0</span></p>
-      <p><i class="fas fa-route"></i> Total Moves: <span id="final-moves">0</span></p>
+      <p><i class="fas fa-fire"></i> Max Streak: <span id="final-streak">0</span></p>
       <p><i class="fas fa-clock"></i> Time: <span id="final-time">0</span>s</p>
-      <button onclick="startNewGame()">
-        <i class="fas fa-redo"></i> New Mission
-      </button>
+      <button id="new-mission"><i class="fas fa-redo"></i> New Quantum Mission</button>
     </div>
   </div>
-  
-  <!-- How to Play Modal -->
   <div class="modal" id="how-to-play">
     <div class="modal-content">
       <h2>HOW TO PLAY</h2>
-      <p><i class="fas fa-user-astronaut"></i> 2 players alternate turns</p>
-      <p><i class="fas fa-mouse-pointer"></i> Click cards to reveal them</p>
-      <p><i class="fas fa-check"></i> Match pairs to score points</p>
-      <p><i class="fas fa-sync-alt"></i> Match = extra turn</p>
-      <p><i class="fas fa-times"></i> No match = next player</p>
-      <p><i class="fas fa-trophy"></i> Most matches wins!</p>
-      <button onclick="hideHowToPlay()">
-        <i class="fas fa-times"></i> Close
-      </button>
+      <p><i class="fas fa-user-astronaut"></i> Two players alternate turns</p>
+      <p><i class="fas fa-mouse-pointer"></i> Click/tap cards to reveal</p>
+      <p><i class="fas fa-check"></i> Match pairs to score</p>
+      <p><i class="fas fa-sync-alt"></i> Match = extra turn + streak</p>
+      <p><i class="fas fa-times"></i> No match = switch player</p>
+      <p><i class="fas fa-trophy"></i> Highest score wins!</p>
+      <button id="close-how-to-play"><i class="fas fa-times"></i> Close</button>
     </div>
   </div>
-
   <script>
-    // Game state variables
-    let cards = [];
-    let flippedCards = [];
-    let matchedCards = [];
-    let moves = 0;
-    let time = 0;
-    let timerInterval;
-    let gridSize = 4;
-    let currentPlayer = 1;
-    let player1Score = 0;
-    let player2Score = 0;
-    let gameActive = false;
-    let canFlip = true;
-    let timerStarted = false;
-    
-    // Emoji sets for different difficulty levels
-    const emojiSets = {
-      easy: ['🚀', '👽', '🛸', '🌌', '🪐', '🔭', '🌠', '☄️'],
-      medium: ['⚡', '🔱', '🌀', '🌈', '🌊', '🔥', '❄️', '🌪️', '💫', '🌑', '🌕', '✨'],
-      hard: ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣', '0️⃣', '🔢', '🔣', '➕', '➖', '✖️', '➗'],
-      expert: ['α', 'β', 'γ', 'δ', 'ε', 'ζ', 'η', 'θ', 'ι', 'κ', 'λ', 'μ', 'ν', 'ξ', 'π', 'ρ', 'σ', 'τ', 'υ', 'φ', 'χ', 'ψ', 'ω', '∞', '∅']
-    };
-    
-    // Math symbols for background
-    const mathSymbols = ['+', '-', '×', '÷', '=', '≠', '≈', '√', '∫', '∑', '∏', '∂', '∆', '∇', '∈', '∉', '∩', '∪', '⊂', '⊃', '∧', '∨', '¬', '∀', '∃'];
-    
-    // Initialize space background
-    function initSpaceBackground() {
-      const spaceBg = document.getElementById('space-bg');
-      spaceBg.innerHTML = '';
-      
-      // Create stars
-      for (let i = 0; i < 100; i++) {
-        const star = document.createElement('div');
-        star.classList.add('star');
-        
-        // Random properties
-        const size = Math.random() * 3 + 1;
-        const left = Math.random() * 100;
-        const top = Math.random() * 100;
-        const opacity = Math.random() * 0.8 + 0.2;
-        const duration = Math.random() * 10 + 5;
-        
-        star.style.width = `${size}px`;
-        star.style.height = `${size}px`;
-        star.style.left = `${left}%`;
-        star.style.top = `${top}%`;
-        star.style.opacity = opacity;
-        star.style.setProperty('--duration', `${duration}s`);
-        
-        spaceBg.appendChild(star);
+    class QuantumMemoryGame {
+      constructor() {
+        this.cards = [];
+        this.flippedCards = [];
+        this.matchedCards = [];
+        this.moves = 0;
+        this.time = 0;
+        this.gridSize = 4;
+        this.currentPlayer = 1;
+        this.player1Score = 0;
+        this.player2Score = 0;
+        this.streak = 0;
+        this.maxStreak = 0;
+        this.gameActive = false;
+        this.canFlip = true;
+        this.timerStarted = false;
+        this.timerInterval = null;
+
+        this.emojiSets = {
+          easy: ['🚀', '👽', '🛸', '🌌', '🪐', '🔭', '🌠', '☄️'],
+          medium: ['⚡', '🔱', '🌀', '🌈', '🌊', '🔥', '❄️', '🌪️', '💫', '🌑', '🌕', '✨', '⚙️', '🔮', '🌬️', '☀️', '🌙', '🌟'],
+          hard: ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣', '0️⃣', '🔢', '🔣', '➕', '➖', '✖️', '➗', '💯', '🎲', '🔍', '🔬', '📊', '📈', '📉', '🔧', '🔩', '⚒️', '⚙️', '🔋', '🔦', '💡'],
+          expert: ['α', 'β', 'γ', 'δ', 'ε', 'ζ', 'η', 'θ', 'ι', 'κ', 'λ', 'μ', 'ν', 'ξ', 'π', 'ρ', 'σ', 'τ', 'υ', 'φ', 'χ', 'ψ', 'ω', '∞', '∅', 'ℵ', 'ℶ', 'ℷ', 'ℸ', '∑', '∏', '∆', '∇', '∂', '∫', '√', '∝', '⊥', '∥', '∮', '∴', '∵', '≅', '≈', '≠', '≡', '≤', '≥', '⊂', '⊃']
+        };
+
+        this.elements = {
+          grid: document.getElementById('grid'),
+          player1Score: document.getElementById('player1-score'),
+          player2Score: document.getElementById('player2-score'),
+          currentPlayer: document.getElementById('current-player'),
+          streak: document.getElementById('streak'),
+          timer: document.getElementById('timer'),
+          progress: document.getElementById('progress'),
+          loading: document.getElementById('loading'),
+          congratulations: document.getElementById('congratulations'),
+          winner: document.getElementById('winner'),
+          finalPlayer1Score: document.getElementById('final-player1-score'),
+          finalPlayer2Score: document.getElementById('final-player2-score'),
+          finalStreak: document.getElementById('final-streak'),
+          finalTime: document.getElementById('final-time'),
+          howToPlay: document.getElementById('how-to-play')
+        };
+
+        this.initEventListeners();
+        this.initBackground();
+        this.createBoard();
       }
-      
-      // Create planets
-      for (let i = 0; i < 3; i++) {
-        const planet = document.createElement('div');
-        planet.classList.add('planet');
-        
-        const size = Math.random() * 100 + 50;
-        const color = `hsl(${Math.random() * 360}, 70%, 50%)`;
-        const startX = Math.random() * 20;
-        const startY = Math.random() * 20;
-        const endX = Math.random() * 20 + 80;
-        const endY = Math.random() * 20 + 80;
-        const duration = Math.random() * 60 + 120;
-        
-        planet.style.width = `${size}px`;
-        planet.style.height = `${size}px`;
-        planet.style.backgroundColor = color;
-        planet.style.setProperty('--start-x', `${startX}%`);
-        planet.style.setProperty('--start-y', `${startY}%`);
-        planet.style.setProperty('--end-x', `${endX}%`);
-        planet.style.setProperty('--end-y', `${endY}%`);
-        planet.style.setProperty('--duration', `${duration}s`);
-        
-        spaceBg.appendChild(planet);
+
+      initEventListeners() {
+        document.getElementById('new-game').addEventListener('click', () => this.startNewGame());
+        document.getElementById('new-mission').addEventListener('click', () => this.startNewGame());
+        document.getElementById('how-to-play-btn').addEventListener('click', () => this.showHowToPlay());
+        document.getElementById('close-how-to-play').addEventListener('click', () => this.hideHowToPlay());
+        document.getElementById('difficulty').addEventListener('change', () => this.changeDifficulty());
+        document.addEventListener('keydown', (e) => this.handleKeyboard(e));
       }
-      
-      // Create spaceships
-      for (let i = 0; i < 4; i++) {
-        const ship = document.createElement('div');
-        ship.classList.add('spaceship');
-        ship.innerHTML = ['🚀', '🛸', '🛰️', '👽'][i % 4];
-        
-        const startY = Math.random() * 80;
-        const endY = Math.random() * 80;
-        const duration = Math.random() * 30 + 30;
-        const rotation = Math.random() * 30 - 15;
-        
-        ship.style.setProperty('--start-y', `${startY}vh`);
-        ship.style.setProperty('--end-y', `${endY}vh`);
-        ship.style.setProperty('--duration', `${duration}s`);
-        ship.style.setProperty('--rotation', `${rotation}deg`);
-        
-        spaceBg.appendChild(ship);
+
+      initBackground() {
+        const bg = document.getElementById('quantum-bg');
+        for (let i = 0; i < 150; i++) {
+          const particle = document.createElement('div');
+          particle.classList.add('particle');
+          particle.style.width = `${Math.random() * 3 + 2}px`;
+          particle.style.height = particle.style.width;
+          particle.style.left = `${Math.random() * 100}%`;
+          particle.style.top = `${Math.random() * 100}%`;
+          particle.style.setProperty('--start-x', `${Math.random() * 50 - 25}%`);
+          particle.style.setProperty('--start-y', `${Math.random() * 50 - 25}%`);
+          particle.style.setProperty('--end-x', `${Math.random() * 50 + 75}%`);
+          particle.style.setProperty('--end-y', `${Math.random() * 50 + 75}%`);
+          particle.style.setProperty('--duration', `${Math.random() * 6 + 4}`);
+          bg.appendChild(particle);
+        }
       }
-      
-      // Create math symbols
-      for (let i = 0; i < 20; i++) {
-        const symbol = document.createElement('div');
-        symbol.classList.add('math-symbol');
-        symbol.textContent = mathSymbols[Math.floor(Math.random() * mathSymbols.length)];
-        
-        const startX = Math.random() * 20;
-        const startY = Math.random() * 20;
-        const endX = Math.random() * 20 + 80;
-        const endY = Math.random() * 20 + 80;
-        const duration = Math.random() * 60 + 60;
-        const color = `hsl(${Math.random() * 360}, 80%, 70%)`;
-        
-        symbol.style.color = color;
-        symbol.style.setProperty('--start-x', `${startX}%`);
-        symbol.style.setProperty('--start-y', `${startY}%`);
-        symbol.style.setProperty('--end-x', `${endX}%`);
-        symbol.style.setProperty('--end-y', `${endY}%`);
-        symbol.style.setProperty('--duration', `${duration}s`);
-        
-        spaceBg.appendChild(symbol);
-      }
-    }
-    
-    // Create the game board
-    function createBoard() {
-      showLoading();
-      const grid = document.getElementById('grid');
-      grid.innerHTML = '';
-      
-      // Clear any existing game state
-      cards = [];
-      flippedCards = [];
-      matchedCards = [];
-      moves = 0;
-      player1Score = 0;
-      player2Score = 0;
-      currentPlayer = 1;
-      timerStarted = false;
-      updateStats();
-      
-      // Set grid columns based on difficulty
-      grid.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
-      
-      const totalCards = gridSize * gridSize;
-      const pairsNeeded = totalCards / 2;
-      
-      // Select appropriate emoji set based on difficulty
-      let selectedEmojis = [];
-      if (gridSize <= 4) {
-        selectedEmojis = emojiSets.easy.slice(0, pairsNeeded);
-      } else if (gridSize <= 6) {
-        selectedEmojis = emojiSets.medium.slice(0, pairsNeeded);
-      } else if (gridSize <= 8) {
-        selectedEmojis = emojiSets.hard.slice(0, pairsNeeded);
-      } else {
-        selectedEmojis = emojiSets.expert.slice(0, pairsNeeded);
-      }
-      
-      // Create card values (pairs) and shuffle
-      const cardValues = [...selectedEmojis, ...selectedEmojis];
-      shuffleArray(cardValues);
-      
-      // Create cards
-      for (let i = 0; i < totalCards; i++) {
-        const card = document.createElement('div');
-        card.classList.add('card');
-        card.dataset.index = i;
-        
-        card.innerHTML = `
-          <div class="card-inner">
-            <div class="card-front"></div>
-            <div class="card-back">${cardValues[i]}</div>
-          </div>
-        `;
-        
-        card.addEventListener('click', () => {
-          if (!timerStarted) {
-            startTimer();
-            timerStarted = true;
-          }
-          flipCard(card, i, cardValues[i]);
+
+      createBoard() {
+        this.showLoading();
+        this.resetGameState();
+        this.elements.grid.innerHTML = '';
+        this.elements.grid.style.gridTemplateColumns = `repeat(${this.gridSize}, minmax(40px, 60px))`; /* Adjusted card sizes */
+
+        const totalCards = this.gridSize * this.gridSize;
+        const pairsNeeded = totalCards / 2;
+        const selectedEmojis = this.getEmojiSet(pairsNeeded);
+        const cardValues = [...selectedEmojis, ...selectedEmojis];
+        this.shuffleArray(cardValues);
+
+        this.cards = Array.from({ length: totalCards }, (_, i) => {
+          const card = document.createElement('div');
+          card.classList.add('card');
+          card.dataset.index = i;
+          card.innerHTML = `
+            <div class="card-inner">
+              <div class="card-front"></div>
+              <div class="card-back">${cardValues[i]}</div>
+            </div>
+          `;
+          card.addEventListener('click', () => this.flipCard(card, i, cardValues[i]));
+          card.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            this.flipCard(card, i, cardValues[i]);
+          });
+          this.elements.grid.appendChild(card);
+          return card;
         });
-        
-        grid.appendChild(card);
-        cards.push(card);
-      }
-      
-      // Hide loading after a short delay to ensure cards are rendered
-      setTimeout(() => {
-        hideLoading();
-        gameActive = true;
-      }, 500);
-    }
-    
-    // Fisher-Yates shuffle algorithm
-    function shuffleArray(array) {
-      for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-      }
-      return array;
-    }
-    
-    // Flip a card
-    function flipCard(card, index, value) {
-      if (!gameActive || !canFlip || flippedCards.length >= 2 || 
-          card.classList.contains('flipped') || 
-          card.classList.contains('matched')) {
-        return;
-      }
-      
-      // Flip the card
-      card.classList.add('flipped');
-      flippedCards.push({ card, index, value });
-      
-      // Play flip sound
-      playSound('flip');
-      
-      // Check for match if two cards are flipped
-      if (flippedCards.length === 2) {
-        moves++;
-        updateStats();
-        checkMatch();
-      }
-    }
-    
-    // Check if flipped cards match
-    function checkMatch() {
-      canFlip = false;
-      const [card1, card2] = flippedCards;
-      
-      if (card1.value === card2.value) {
-        // Match found
+
         setTimeout(() => {
-          card1.card.classList.add('matched');
-          card2.card.classList.add('matched');
-        }, 300);
-        
-        matchedCards.push(card1.card, card2.card);
-        
-        // Update score for current player
-        if (currentPlayer === 1) {
-          player1Score++;
-        } else {
-          player2Score++;
+          this.hideLoading();
+          this.gameActive = true;
+        }, 500);
+      }
+
+      getEmojiSet(pairsNeeded) {
+        const setKey = this.gridSize <= 4 ? 'easy' : this.gridSize <= 6 ? 'medium' : this.gridSize <= 8 ? 'hard' : 'expert';
+        return this.emojiSets[setKey].slice(0, pairsNeeded);
+      }
+
+      shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
         }
-        
-        updateStats();
-        playSound('match');
-        
-        // Check if game is over
-        if (matchedCards.length === cards.length) {
-          setTimeout(endGame, 800);
-        } else {
-          // Allow player to continue if they found a match
+      }
+
+      flipCard(card, index, value) {
+        if (!this.gameActive || !this.canFlip || this.flippedCards.length >= 2 || 
+            card.classList.contains('flipped') || card.classList.contains('matched')) {
+          return;
+        }
+
+        if (!this.timerStarted) {
+          this.startTimer();
+          this.timerStarted = true;
+        }
+
+        card.classList.add('flipped');
+        this.flippedCards.push({ card, index, value });
+        this.playSound('flip');
+
+        if (this.flippedCards.length === 2) {
+          this.moves++;
+          this.checkMatch();
+        }
+      }
+
+      checkMatch() {
+        this.canFlip = false;
+        const [card1, card2] = this.flippedCards;
+
+        if (card1.value === card2.value) {
+          this.streak++;
+          this.maxStreak = Math.max(this.maxStreak, this.streak);
           setTimeout(() => {
-            flippedCards = [];
-            canFlip = true;
-          }, 500);
+            card1.card.classList.add('matched');
+            card2.card.classList.add('matched');
+            this.matchedCards.push(card1.card, card2.card);
+            this.currentPlayer === 1 ? this.player1Score++ : this.player2Score++;
+            this.updateStats();
+            this.playSound('match');
+
+            if (this.matchedCards.length === this.cards.length) {
+              this.endGame();
+            } else {
+              this.flippedCards = [];
+              this.canFlip = true;
+            }
+          }, 300);
+        } else {
+          this.streak = 0;
+          this.playSound('mismatch');
+          card1.card.classList.add('shake');
+          card2.card.classList.add('shake');
+          setTimeout(() => {
+            card1.card.classList.remove('flipped', 'shake');
+            card2.card.classList.remove('flipped', 'shake');
+            this.flippedCards = [];
+            this.switchPlayer();
+            this.canFlip = true;
+          }, 800);
         }
-      } else {
-        // No match
-        playSound('mismatch');
-        card1.card.classList.add('shake');
-        card2.card.classList.add('shake');
-        
-        setTimeout(() => {
-          card1.card.classList.remove('flipped', 'shake');
-          card2.card.classList.remove('flipped', 'shake');
-          flippedCards = [];
-          switchPlayer();
-          canFlip = true;
+      }
+
+      switchPlayer() {
+        this.currentPlayer = this.currentPlayer === 1 ? 2 : 1;
+        this.updateStats();
+        this.elements.currentPlayer.animate([
+          { transform: 'scale(1)', opacity: 1 },
+          { transform: 'scale(1.2)', opacity: 0.8 },
+          { transform: 'scale(1)', opacity: 1 }
+        ], { duration: 500, easing: 'ease-in-out' });
+      }
+
+      updateStats() {
+        this.elements.player1Score.textContent = this.player1Score;
+        this.elements.player2Score.textContent = this.player2Score;
+        this.elements.currentPlayer.textContent = `Player ${this.currentPlayer}`;
+        this.elements.streak.textContent = this.streak;
+        this.elements.timer.textContent = this.time;
+        this.elements.progress.style.width = `${(this.matchedCards.length / this.cards.length) * 100}%`;
+      }
+
+      startTimer() {
+        clearInterval(this.timerInterval);
+        this.time = 0;
+        this.timerInterval = setInterval(() => {
+          this.time++;
+          this.updateStats();
         }, 1000);
       }
-    }
-    
-    // Switch to the other player
-    function switchPlayer() {
-      currentPlayer = currentPlayer === 1 ? 2 : 1;
-      updateStats();
-      
-      // Highlight current player
-      const currentPlayerElement = document.getElementById('current-player');
-      currentPlayerElement.classList.add('pulse');
-      setTimeout(() => {
-        currentPlayerElement.classList.remove('pulse');
-      }, 1000);
-    }
-    
-    // Update game stats display
-    function updateStats() {
-      document.getElementById('player1-score').textContent = player1Score;
-      document.getElementById('player2-score').textContent = player2Score;
-      document.getElementById('current-player').textContent = `Player ${currentPlayer}`;
-      document.getElementById('moves').textContent = moves;
-      document.getElementById('timer').textContent = time;
-    }
-    
-    // Start the game timer
-    function startTimer() {
-      clearInterval(timerInterval);
-      time = 0;
-      timerInterval = setInterval(() => {
-        time++;
-        updateStats();
-      }, 1000);
-    }
-    
-    // End the game
-    function endGame() {
-      gameActive = false;
-      clearInterval(timerInterval);
-      playSound('win');
-      
-      // Determine winner
-      let winnerText;
-      if (player1Score > player2Score) {
-        winnerText = 'PLAYER 1 WINS! 🎉';
-      } else if (player2Score > player1Score) {
-        winnerText = 'PLAYER 2 WINS! 🎉';
-      } else {
-        winnerText = "IT'S A TIE! 🤝";
+
+      endGame() {
+        this.gameActive = false;
+        clearInterval(this.timerInterval);
+        this.playSound('win');
+
+        const winnerText = this.player1Score > this.player2Score ? 'PLAYER 1 WINS! 🎉' :
+                          this.player2Score > this.player1Score ? 'PLAYER 2 WINS! 🎉' : "IT'S A TIE! 🤝";
+
+        this.elements.winner.textContent = winnerText;
+        this.elements.finalPlayer1Score.textContent = this.player1Score;
+        this.elements.finalPlayer2Score.textContent = this.player2Score;
+        this.elements.finalStreak.textContent = this.maxStreak;
+        this.elements.finalTime.textContent = this.time;
+        this.elements.congratulations.classList.add('show');
+        this.createConfetti();
       }
-      
-      // Update congratulations modal
-      document.getElementById('winner').innerHTML = winnerText;
-      document.getElementById('final-player1-score').textContent = player1Score;
-      document.getElementById('final-player2-score').textContent = player2Score;
-      document.getElementById('final-moves').textContent = moves;
-      document.getElementById('final-time').textContent = time;
-      
-      // Show congratulations modal with animation
-      const congrats = document.getElementById('congratulations');
-      congrats.classList.add('show');
-      
-      // Create confetti effect
-      createConfetti();
-    }
-    
-        // Show loading screen
-    function showLoading() {
-      const loading = document.getElementById('loading');
-      loading.classList.add('show');
-    }
-    
-    // Hide loading screen
-    function hideLoading() {
-      const loading = document.getElementById('loading');
-      loading.classList.remove('show');
-    }
-    
-    // Start a new game
-    function startNewGame() {
-      const congrats = document.getElementById('congratulations');
-      congrats.classList.remove('show');
-      gameActive = false;
-      clearInterval(timerInterval);
-      createBoard();
-    }
-    
-    // Change difficulty
-    function changeDifficulty() {
-      const difficulty = document.getElementById('difficulty').value;
-      gridSize = parseInt(difficulty);
-      startNewGame();
-    }
-    
-    // Show how-to-play modal
-    function showHowToPlay() {
-      const howToPlay = document.getElementById('how-to-play');
-      howToPlay.classList.add('show');
-    }
-    
-    // Hide how-to-play modal
-    function hideHowToPlay() {
-      const howToPlay = document.getElementById('how-to-play');
-      howToPlay.classList.remove('show');
-    }
-    
-    // Create confetti effect
-    function createConfetti() {
-      const modalContent = document.querySelector('#congratulations .modal-content');
-      for (let i = 0; i < 100; i++) {
-        const confetti = document.createElement('div');
-        confetti.classList.add('confetti');
-        
-        // Random properties for confetti
-        const colors = ['#00f0ff', '#ff00e6', '#7122fa', '#ffcc00', '#00ff88'];
-        const size = Math.random() * 10 + 5;
-        const left = Math.random() * 100;
-        const animationDuration = Math.random() * 3 + 2;
-        const rotation = Math.random() * 360;
-        
-        confetti.style.width = `${size}px`;
-        confetti.style.height = `${size}px`;
-        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-        confetti.style.left = `${left}%`;
-        confetti.style.top = `${-10}%`;
-        confetti.style.opacity = '1';
-        confetti.style.transform = `rotate(${rotation}deg)`;
-        confetti.style.animation = `fall ${animationDuration}s linear`;
-        
-        modalContent.appendChild(confetti);
-        
-        // Remove confetti after animation
-        setTimeout(() => {
-          confetti.remove();
-        }, animationDuration * 1000);
+
+      showLoading() {
+        this.elements.loading.classList.add('show');
+      }
+
+      hideLoading() {
+        this.elements.loading.classList.remove('show');
+      }
+
+      startNewGame() {
+        this.elements.congratulations.classList.remove('show');
+        this.gameActive = false;
+        clearInterval(this.timerInterval);
+        this.createBoard();
+      }
+
+      changeDifficulty() {
+        this.gridSize = parseInt(document.getElementById('difficulty').value);
+        this.startNewGame();
+      }
+
+      showHowToPlay() {
+        this.elements.howToPlay.classList.add('show');
+      }
+
+      hideHowToPlay() {
+        this.elements.howToPlay.classList.remove('show');
+      }
+
+      createConfetti() {
+        const modalContent = this.elements.congratulations.querySelector('.modal-content');
+        for (let i = 0; i < 120; i++) {
+          const confetti = document.createElement('div');
+          confetti.classList.add('confetti');
+          const colors = [this.getComputedStyleValue('--primary'), this.getComputedStyleValue('--secondary'), this.getComputedStyleValue('--accent')];
+          confetti.style.cssText = `
+            position: absolute;
+            width: ${Math.random() * 8 + 4}px;
+            height: ${Math.random() * 8 + 4}px;
+            background: ${colors[Math.floor(Math.random() * colors.length)]};
+            left: ${Math.random() * 100}%;
+            top: -10%;
+            opacity: 1;
+            transform: rotate(${Math.random() * 360}deg);
+          `;
+          confetti.animate([
+            { transform: 'translateY(-10%) rotate(0deg)', opacity: 1 },
+            { transform: `translateY(100vh) rotate(${Math.random() * 720}deg)`, opacity: 0 }
+          ], { duration: Math.random() * 2000 + 2000, easing: 'linear' });
+          modalContent.appendChild(confetti);
+          setTimeout(() => confetti.remove(), 4000);
+        }
+      }
+
+      getComputedStyleValue(property) {
+        return getComputedStyle(document.documentElement).getPropertyValue(property).trim();
+      }
+
+      playSound(type) {
+        const sounds = {
+          flip: 'https://assets.codepen.io/605876/card-flip.mp3',
+          match: 'https://assets.codepen.io/605876/match.mp3',
+          mismatch: 'https://assets.codepen.io/605876/mismatch.mp3',
+          win: 'https://assets.codepen.io/605876/win.mp3'
+        };
+        if (sounds[type]) {
+          const audio = new Audio(sounds[type]);
+          audio.play().catch(() => console.log(`Failed to play ${type} sound`));
+        }
+      }
+
+      handleKeyboard(e) {
+        if (e.key === 'Enter') this.startNewGame();
+        if (e.key === 'Escape') this.hideHowToPlay();
+        if (e.key === '?' || e.key === 'h') this.showHowToPlay();
+      }
+
+      resetGameState() {
+        this.cards = [];
+        this.flippedCards = [];
+        this.matchedCards = [];
+        this.moves = 0;
+        this.time = 0;
+        this.player1Score = 0;
+        this.player2Score = 0;
+        this.streak = 0;
+        this.maxStreak = 0;
+        this.currentPlayer = 1;
+        this.timerStarted = false;
+        this.updateStats();
       }
     }
-    
-    // Add confetti fall animation
-    const styleSheet = document.createElement('style');
-    styleSheet.innerHTML = `
-      @keyframes fall {
-        0% { transform: translateY(-10%) rotate(0deg); opacity: 1; }
-        100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
-      }
-    `;
-    document.head.appendChild(styleSheet);
-    
-    // Play sound effects
-    function playSound(type) {
-      let sound;
-      switch (type) {
-        case 'flip':
-          sound = new Audio('https://assets.codepen.io/605876/card-flip.mp3');
-          break;
-        case 'match':
-          sound = new Audio('https://assets.codepen.io/605876/match.mp3');
-          break;
-        case 'mismatch':
-          sound = new Audio('https://assets.codepen.io/605876/mismatch.mp3');
-          break;
-        case 'win':
-          sound = new Audio('https://assets.codepen.io/605876/win.mp3');
-          break;
-        default:
-          return;
-      }
-      sound.play().catch(err => console.log('Sound not played:', err));
-    }
-    
-    // Initialize game on page load
-    document.addEventListener('DOMContentLoaded', () => {
-      initSpaceBackground();
-      createBoard();
-    });
+
+    document.addEventListener('DOMContentLoaded', () => new QuantumMemoryGame());
   </script>
+
+  <div class="note">
+    <h2 class="greet">About Quantum Memory Master</h2>
+    <p>
+      <strong>Quantum Memory Master</strong> is a memory card game where two players compete to match pairs of cards. The game features a quantum theme with animated particles and sound effects. Players can choose different difficulty levels, and the game tracks scores, streaks, and time taken to complete the game.
+      The game is designed to be responsive and visually appealing, with a modern interface and smooth animations. Players can also access a "How to Play" guide for instructions on gameplay.
+      The game includes sound effects for flipping cards, matching pairs, and winning the game. It also features a confetti animation upon victory to celebrate the winner.
+      The game is built using HTML, CSS, and JavaScript, making it easy to run in any modern web browser. It is a fun and engaging way to test memory skills while enjoying a visually stunning experience.
+      <strong>Note:</strong> This game is a fun project and does not involve actual quantum mechanics. It is purely a memory game with a quantum theme.
+      <strong>Disclaimer:</strong> This game is a fun project and does not involve actual quantum mechanics. It is purely a memory game with a quantum theme.
+    </p>
+
+  </div>
+
+  <footer>
+    <p>Quantum Memory Master. All rights reserved.</p>
+    <p>Created by <a href="https://github.com/OPBSUTHAR" target="_blank"><span class="greet-foot">Omprakash Suthar with &hearts;, &copy; 2025 Quantum Memory Master</span></a></p>
+  </footer>
 </body>
 </html>
